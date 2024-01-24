@@ -1,0 +1,240 @@
+@startuml
+package presentation{
+
+class Main{
++{static}main(String[]): void
+-{static}createChecks(checkNames: List<String>, classes: List<ClassModel>): List<Check>
+-{static}runChecks(checks: List<Check>): void
+}
+
+interface FileSelect{
++{abstract}openFiles(): List<File>
+}
+
+class FileChooser{
++openFiles(): List<File>
+}
+
+class CheckboxFrame{
++CheckboxFrame(String[] options)
+}
+
+class JFrame{
+
+}
+
+}
+
+package domain{
+
+abstract class Check{
+#classModels: List<ClassModel>
++{abstract}performCheck(): List<String>
+-parseFieldType(input: String): String
+}
+
+class HashcodeAndEquals{
++HashcodeAndEquals(classModels: List<ClassModel>)
++performCheck(): List<String>
+-violatesHashCodeAndEquals(model: ClassModel, arr: boolean[]): boolean
+}
+
+class TightCoupling{
+-retVal: List<String>
+-percentCheck: double
+-relationshipCreator: DependencyHasACreator
++TightCoupling(classModels: List<ClassModel>, percentCheck: double)
++performCheck(): List<String>
+-checkTightOverallCoupling(numClasses: int): void
+-countRelations(relationshipMap: Map<String, List<String>>): int
+-checkCircularHasA(): void
+
+}
+
+class GeneratePlantUML {
+-logger: DataLogger
+-classNames: List<String>
+-relationshipCreator: DependencyHasACreator
++GeneratePlantUML(classes: ArrayList<ClassModel>, dataLogger: DataLogger)
++performCheck(): List<String>
+-generateDependenciesAndHasAArrows(): void
+-generateClasses(): void
+-generateMethods(model: ClassModel): void
+-generateFields(model: ClassModel): void
+-generateInheritanceImplementArrows(): void
+-getMethodParameters(method: MethodModel): String
+-accessModifier(access: int): String
+}
+
+class DependencyHasACreator{
+-dependencyMap: Map<String, List<String>>
+-hasAMap: Map<String, List<String>>
++DependencyHasACreator(ArrayList<ClassModel> classes)
+-addDependencies(model: ClassModel, modelName: String): void
+-addDependencyToMap(modelName: String, argType: String): void
+-parseNewObjectInMethod(input: String): String
+-isNotCommonType(type: String): boolean
+-addHasA(model: ClassModel, modelName: String): void
++getHasA(): Map<String, List<String>>
++getDependencies(): Map<String, List<String>>
+}
+
+class DecoratorPattern{
+-decoratingPattern: List<String>
+-decorPatternsDetected: Map<String, ArrayList<String>>
+-isGoodDecorator: boolean
++DecoratorPattern(classModels: List<ClassModel>)
++performCheck(): List<String>
+-followsDecoratorPattern(supername: String, model: ClassModel): boolean
+-checkConstraintAbstractDecorator(int count, ClassModel model): void
+-addToFieldListChecker(fields: List<String>, model: classModel): void
+-addDecoratorPatternDetected(model: ClassModel, superName: String): void
+-checkMethodCallsSameMethod(model: ClassModel): void
+-findAndCheckCores(): void
+}
+
+class MethodLength{
+-checkResults: List<String>
++MethodModel(classModels: List<ClassModel>)
++performCheck(): List<String>
+}
+
+class VariableNameFormat{
++VariableNameFormat(classModels: List<ClassModel>)
++performCheck(): List<String>
+}
+
+class HollywoodPrinciple{
+-checkResults: List<String>
++HollywoodPrinciple(classModels: List<ClassModel>)
++performCheck(): List<String>
+-checkSuperClassForDependency(aClass: ClassModel, superClass: ClassModel): void
+}
+
+class StrategyPattern{
+-interfaces: List<String>
+-checkResults: List<String>
++StrategyPattern(classModels: List<ClassModel>)
++performCheck(): List<String>
+-lookForStrategySetMethod(aClass: ClassModel, interfaceType: String): boolean
+}
+
+class TemplatePattern{
++TemplatePattern(classModels: List<ClassModel>)
++performCheck(): List<String>
+}
+
+class InformationHiding{
++InformationHiding(classModels: List<ClassModel>)
++performCheck(): List<String>
+}
+
+package adapter{
+
+class ClassModel{
+-access: int
+-name: String
+-signature: String
+-superName: String
+-interfaces: List<String>
+-fields: List<FieldModel>
+-methods: List<MethodModel>
+//Constructor() takes in and sets every fields initial value
+//getter() for every field
+-parseClassName(model: String): String
+-parseSuperType(input: String): String
+}
+
+class MethodModel{
+-access: int
+-name: String
+-exceptions: List<String>
+-parameters: List<FieldModel>
+-length: int
+-methodCalls: List<String>
+//Constructor() takes in and sets every fields initial value
+//getter() for every field
+}
+
+class FieldModel{
+-access: int
+-name: String
+-value: Object
+//Constructor() takes in and sets every fields initial value
+//getter() for every field
+}
+
+interface ClassModelGenerator{
++{abstract}generateModels(files: File[]): List<ClassModel>
+}
+
+class ASMLibrary{
++generateClassModels(files: File[]): List<ClassModel>
+-generateMethodModels(classNode: ClassNode): List<MethodModel>
+-generateFieldModels(classNode: ClassNode): List<FieldModel>
+-generateParameters(methodNode: MethodNode): List<FieldNode>
+-generateMethodCalls(methodNode: MethodNode): List<String>
+-getMethodLength(methodNode: MethodNode): int
+-createReaders(files: File[]): List<ClassReader>
+}
+
+
+
+
+}
+
+
+}
+
+package datasource{
+
+interface DataLogger {
++{abstract}log(line: String): void
+}
+
+class PlantUMLFileLogger {
+-stream: PrintStream
++PlantUMLFileLogger(filePath: String)
++log(line: String): void
+}
+
+}
+
+ClassModel -->"*" FieldModel
+ClassModel -->"*" MethodModel
+
+PlantUMLFileLogger ..|> DataLogger
+
+Main ..> ClassModelGenerator
+Main ..> PlantUMLFileLogger
+ClassModelGenerator ..left..> ClassModel
+Main ..left.> FileSelect
+Main ..> Check
+Main ..> GeneratePlantUML
+TightCoupling ..> DependencyHasACreator
+GeneratePlantUML ..> DependencyHasACreator
+
+ASMLibrary .up.|> ClassModelGenerator
+ASMLibrary ..> FieldModel
+ASMLibrary ..> MethodModel
+ASMLibrary ..> ClassModel
+Check -->"*" ClassModel
+
+HashcodeAndEquals -up-|> Check
+MethodLength -up-|> Check
+VariableNameFormat -up-|> Check
+DecoratorPattern -right-|> Check
+StrategyPattern -right-|> Check
+TemplatePattern -right-|> Check
+GeneratePlantUML --|> Check
+HollywoodPrinciple -down-|> Check
+TightCoupling -down-|> Check
+InformationHiding -down-|> Check
+CheckboxFrame -up-|> JFrame
+
+GeneratePlantUML --> DataLogger
+GeneratePlantUML --> DependencyHasACreator
+TightCoupling --> DependencyHasACreator
+FileChooser .up.|> FileSelect
+
+@enduml

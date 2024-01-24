@@ -1,0 +1,35 @@
+@startuml
+
+class Baby {
+ +Baby(): void
+ +fly(): void
+ +printFly(String): void
+ +makeNoise(): void
+}
+
+class Duck {
+ +Duck(): void
+ +fly(): void
+ +makeNoise(String): void
+}
+
+class Mallard {
+ +Mallard(): void
+ +fly(): void
+ +printFly(String): void
+ +makeNoise(): void
+}
+
+class Rubber {
+ +Rubber(): void
+ +fly(): void
+ +printFly(String): void
+ +makeNoise(): void
+}
+
+
+Baby --|> Duck
+Mallard --|> Duck
+Rubber --|> Duck
+
+@enduml
