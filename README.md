@@ -18,12 +18,12 @@ Blaise Swartwood, Brian Beasley, Jonathan Spychalski
 |:------------------|:-------------------|:----------------|:------------------|:---------------------|
 | Blaise Swartwood   |  Hashcode & Equals |  Tight Coupling | Decorator Pattern |  Errors/Suggestions in Decorator Pattern && PlantUML Code Generation |
 | Brian Beasley      | Source Code Method Length | Holleywood Principle | Strategy Pattern |  |
-| Jonathan Spychalski| Variable Name Format (case) | Information Hiding | Template Pattern |                  
+| Jonathan Spychalski| Variable Name Format | Information Hiding | Template Pattern |                  
 
 
 ## Configure and Run Tests ##
-Upon running the main method, a JFileChooser will appear. Then you can navigate through the file chooser to find any .class files you wish to use. In order to test the tests that we have provided,
-You can navigate to where ever you IDE projects are strored and within this project look for the "target" folder which has all the .class files for the tests in the "test-classes" folder. You can select 
-mulitple files from the JFileChooser by ctrl or shift clicking multiple files. Once you choose the files, you can select which tests you would like to run in the next popup box. Once you select the tests,
-they will run and the results will be printed out to the console.
+Upon running the main method (located inside Main.java, in src/main/java/presentation), a JFileChooser will appear. Then you can navigate through the file chooser to select any .class files you wish to use (more than one can be selected, but they must be located in the same directory). Alternatively, you can select a directory, which will simply select all .class files located in that directory. Then you can select the "Open" button. This will add those .class files to the selection. The JFileChooser will pop up again. If you have already selected all the files you want, you can click "Cancel." If you want to select more, from other directories, you can continue to select them in the same way and click "Open". When you are finished, click "Cancel". Make sure you haven't selected anything when you click Cancel, this is for after you have aleady selected all the files you want. Once you finish selecting, a box will appear where you can select what information you want to print (class/field/method info) as well as which tests you would like to run. Once you select the tests, they will run and the results will be printed to the console. 
 
+In order to utilize any of the test classes we have provided, navigate to target/test-classes/domain within this project, where the .class files are organized by check, from within the JFileChooser. 
+
+The JUnit tests can be run from UnitTests.java, located in src/test/java.
