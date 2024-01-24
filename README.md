@@ -1,5 +1,9 @@
 # Project: Linter
 
+This was a school project I completed with two other classmates to create a linter to detect common programming issues. There was a style check, principle check, pattern check, and additional feature that needed to be developed. We used the base ASM library to read Java code, but for flexibility and maintainence for good software design, created our own adapter class for our work. That way, if we ever changed libraries, we could simply edit the adaptor instead of our functional code. 
+
+The parts of my project focused on recognizing tight coupling and flawed implementations of the Decorator Design Pattern. For my extra A level feature, I suggested changes that could be made to the Decorator Pattern as well as generated a Plant UML diagram inputted code.
+
 ## Dependencies
 Specified in pom.xml
 
