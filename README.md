@@ -4,6 +4,8 @@ This was a school project I completed with two other classmates to create a lint
 
 The parts of my project focused on recognizing tight coupling and flawed implementations of the Decorator Design Pattern. For my extra A level feature, I suggested changes that could be made to the Decorator Pattern as well as generated a Plant UML diagram inputted code.
 
+For more details on the implementation of these detections, check the Wiki Pages.
+
 ## Dependencies
 Specified in pom.xml
 
